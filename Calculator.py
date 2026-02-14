@@ -35,6 +35,10 @@ last_letter = "c"
 
 for letter in in_string:
     last_letter = letter
+    if curr_num.is_integer():
+        curr_num = int(curr_num)
+    if next_result.is_integer():
+        next_result = int(next_result)
 
     if round_digit < 0 and letter != "~":
         next_result = round(next_result, round_digit+1)
@@ -73,6 +77,8 @@ for letter in in_string:
     elif letter == "]":
         next_result *= next_result
     elif letter == ">": #cannot handle negative numbers at the moment
+        if next_result.is_integer():
+            next_result = int(next_result)
         next_result = float(str(next_result)[::-1])
     else: #ignore unrecognized symbols like spaces and parentheses
         continue
