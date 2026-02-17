@@ -2,6 +2,7 @@
 # This script does not check the validity of the input
 
 import operator
+import math
 
 print("Letters signify the colors of the numbers that follow them")
 print("\tc = cyan/blue (addition)\n",
@@ -9,9 +10,9 @@ print("\tc = cyan/blue (addition)\n",
       "\tm = magenta/pink (multiplication)\n",
       "\tp = purple (division)\n")
 print("Dart board functions can also be used, these should appear after the number")
-print("\t.. = Perform the last operation twice\n",
-      "\t... = Perform the last operation three times\n",
-      "\t.... = Perform the last operation four times\n",
+print("\t** = Perform the last operation twice\n",
+      "\t*** = Perform the last operation three times\n",
+      "\t**** = Perform the last operation four times\n",
       "\tx = Skip the last operation\n",
       "\t/ = half the last number\n",
       "\t\\ = third the last number\n")
@@ -26,7 +27,6 @@ in_string = input("Math problem: ") + " "
 
 curr_num = 0
 next_result = 0
-
 round_digit = 0 
 num_of_times = 0
 last_num = 0
@@ -41,9 +41,11 @@ for letter in in_string:
         next_result = int(next_result)
 
     if round_digit < 0 and letter != "~":
+        if (next_result - int(next_result) >= 0.49): #prevent floating point errors
+            next_result = math.ceil(next_result)
         next_result = round(next_result, round_digit+1)
         round_digit = 0
-    if num_of_times > 0 and letter != ".":
+    if num_of_times > 0 and letter != "*":
         next_result = curr_num
         while num_of_times > 0:
             next_result = op_function(next_result, last_num)
@@ -61,9 +63,16 @@ for letter in in_string:
             op_function = operator.truediv
         curr_num = next_result
         last_num = 0
+        decimal_place = 0
     if letter.isdigit():
-        last_num = last_num * 10 + int(letter)
+        if decimal_place < 1:
+            last_num = last_num * 10 + int(letter)
+        else:
+            last_num = last_num + (int(letter) / pow(10, decimal_place))
+            decimal_place +=1
         next_result = op_function(curr_num, last_num)
+    if letter == ".":
+        decimal_place = 1
     elif letter == "/":
         last_num /= 2
         next_result = op_function(curr_num, last_num)
@@ -72,7 +81,7 @@ for letter in in_string:
         next_result = op_function(curr_num, last_num)
     elif letter == "~":
         round_digit -= 1
-    elif letter == ".":
+    elif letter == "*":
         num_of_times += 1
     elif letter == "]":
         next_result *= next_result

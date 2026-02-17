@@ -1,4 +1,6 @@
-# This script will find the numerical core of 4 ordered numbers
+# This script contains major spoilers for late game puzzles
+
+# This script will find the numeric core of 4 ordered numbers
 # If the result is over 1000, run the script again with the new digits
 
 smallest_whole = 10000
