@@ -27,6 +27,7 @@ in_string = input("Math problem: ") + " "
 
 curr_num = 0
 next_result = 0
+decimal_place = 0
 round_digit = 0 
 num_of_times = 0
 last_num = 0
