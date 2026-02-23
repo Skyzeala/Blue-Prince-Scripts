@@ -15,10 +15,11 @@ print("\t** = Perform the last operation twice\n",
       "\t**** = Perform the last operation four times\n",
       "\tx = Skip the last operation\n",
       "\t/ = half the last number\n",
-      "\t\\ = third the last number\n")
+      "\t\\ = third the last number\n",
+      "\t^ = perform the diamond inversion on the last number\n")
 print("Algebra symbols appear after the number and dart board symbols (except x)")
-print("\t[] = square (actually only checks for ])\n",
-      "\t<> = reverse/inverse (actually only checks for >)\n",
+print("\t[] = square the result (actually only checks for ])\n",
+      "\t<> = reverse/inverse the result (actually only checks for >)\n",
       "\t~ = round to nearest whole\n",
       "\t~~ = round to nearest tens\n",
       "\t~~~ = round to nearest hundreds\n")
@@ -80,6 +81,9 @@ for letter in in_string:
     elif letter == "\\":
         last_num /= 3
         next_result = op_function(curr_num, last_num)
+    elif letter == "^":
+        last_num = float(str(last_num)[::-1])
+        next_result = op_function(next_result, last_num)
     elif letter == "~":
         round_digit -= 1
     elif letter == "*":
